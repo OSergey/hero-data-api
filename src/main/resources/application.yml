@@ -1,0 +1,4 @@
+hero:
+  config:
+    count: 10
+    expLevelConfig: classpath:exp_level_config.json
