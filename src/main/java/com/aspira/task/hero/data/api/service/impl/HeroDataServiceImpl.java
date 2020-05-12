@@ -27,7 +27,7 @@ public class HeroDataServiceImpl implements HeroDataService {
           hero.setLevel(hero.getLevel() + 1);
           hero.setExperience(hero.getExperience() - expLevelUp);
         }
-      } while (hero.getExperience() >= expLevelUp || hero.getLevel() == 100);
+      } while (hero.getExperience() >= expLevelUp || hero.getLevel() == expLevelConfigService.getMaxLevel());
       return hero;
     });
   }

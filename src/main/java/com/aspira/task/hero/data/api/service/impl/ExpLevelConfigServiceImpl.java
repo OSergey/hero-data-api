@@ -17,6 +17,7 @@ public class ExpLevelConfigServiceImpl implements ExpLevelConfigService {
   private final Resource expLevelConfigFile;
   private final ObjectMapper objectMapper;
   private Map<Integer, Integer> expLevelConfig;
+  private Integer maxLevel;
 
 
   @PostConstruct
@@ -31,13 +32,13 @@ public class ExpLevelConfigServiceImpl implements ExpLevelConfigService {
   private Map<Integer, Integer> validateConfig(Map<Integer, Integer> expLevelConfig)
       throws ConfigurationException {
     Map<Integer, Integer> expLevelConfigResult = new HashMap<>();
-    int maxLevel = expLevelConfig.keySet().stream().max(Integer::compareTo)
+    this.maxLevel = expLevelConfig.keySet().stream().max(Integer::compareTo)
         .orElseThrow(() -> new ConfigurationException("Config file is empty"));
     int exp = 0;
-    for (int level = 1; level <= maxLevel; level++) {
+    for (int level = 1; level <= this.maxLevel; level++) {
       if (expLevelConfig.containsKey(level)) {
         exp = expLevelConfig.get(level);
-        if (expLevelConfig.get(level) <= 0 && level != maxLevel) {
+        if (expLevelConfig.get(level) <= 0 && level != this.maxLevel) {
           throw new ConfigurationException("Experience levelup must be greater than 0");
         }
       }
@@ -46,8 +47,14 @@ public class ExpLevelConfigServiceImpl implements ExpLevelConfigService {
     return expLevelConfigResult;
   }
 
+  @Override
   public Map<Integer, Integer> getExpLevelConfig() {
     return this.expLevelConfig;
+  }
+
+  @Override
+  public Integer getMaxLevel(){
+    return this.maxLevel;
   }
 
 }

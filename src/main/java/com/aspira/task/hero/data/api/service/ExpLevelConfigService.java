@@ -5,4 +5,5 @@ import java.util.Map;
 public interface ExpLevelConfigService {
 
   Map<Integer, Integer> getExpLevelConfig();
+  Integer getMaxLevel();
 }
