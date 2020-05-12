@@ -31,21 +31,17 @@ public class ExpLevelConfigServiceImpl implements ExpLevelConfigService {
   private Map<Integer, Integer> validateConfig(Map<Integer, Integer> expLevelConfig)
       throws ConfigurationException {
     Map<Integer, Integer> expLevelConfigResult = new HashMap<>();
-    if (expLevelConfig.keySet().size() != 11) {
-      throw new ConfigurationException("Level must be from 1 to 100 grouped by 10 levels");
-    }
-    for (var e : expLevelConfig.entrySet()) {
-      if (e.getKey()!= 100 && e.getValue() <= 0) {
-        throw new ConfigurationException("Experience levelup must be greater than 0");
+    int maxLevel = expLevelConfig.keySet().stream().max(Integer::compareTo)
+        .orElseThrow(() -> new ConfigurationException("Config file is empty"));
+    int exp = 0;
+    for (int level = 1; level <= maxLevel; level++) {
+      if (expLevelConfig.containsKey(level)) {
+        exp = expLevelConfig.get(level);
+        if (expLevelConfig.get(level) <= 0 && level != maxLevel) {
+          throw new ConfigurationException("Experience levelup must be greater than 0");
+        }
       }
-    }
-    for (int i = 1; i <= 100; i++) {
-      Integer configLevel = i < 10 ? 1 : i / 10 * 10;
-      if (!expLevelConfig.containsKey(configLevel)) {
-        throw new ConfigurationException(
-            String.format("Level : '%s' must be set in config file", i));
-      }
-      expLevelConfigResult.put(i, expLevelConfig.get(configLevel));
+      expLevelConfigResult.put(level, exp);
     }
     return expLevelConfigResult;
   }

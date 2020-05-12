@@ -18,10 +18,6 @@ public class HeroDataProperties {
 
   @NotNull
   @Valid
-  private Integer memberCount;
-
-  @NotNull
-  @Valid
   private Resource expLevelConfig;
 
 }

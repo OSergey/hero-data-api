@@ -1,4 +1,3 @@
 hero:
   config:
-    memberCount: 10
     expLevelConfig: classpath:exp_level_config.json
