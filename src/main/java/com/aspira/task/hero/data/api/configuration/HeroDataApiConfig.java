@@ -12,21 +12,18 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class HeroDataApiConfig {
 
-  @Autowired
-  private HeroDataProperties heroDataProperties;
-
   @Bean
   public ObjectMapper objectMapper() {
     return new ObjectMapper();
   }
 
   @Bean
-  public ExpLevelConfigService expLevelConfig(ObjectMapper objectMapper) {
+  public ExpLevelConfigService expLevelConfig(ObjectMapper objectMapper, HeroDataProperties heroDataProperties) {
     return new ExpLevelConfigServiceImpl(heroDataProperties.getExpLevelConfig(), objectMapper);
   }
 
   @Bean
-  public HeroDataService heroDataService(ExpLevelConfigService expLevelConfig) {
+  public HeroDataService heroDataService(ExpLevelConfigService expLevelConfig, HeroDataProperties heroDataProperties) {
     return new HeroDataServiceImpl(expLevelConfig, heroDataProperties);
   }
 }

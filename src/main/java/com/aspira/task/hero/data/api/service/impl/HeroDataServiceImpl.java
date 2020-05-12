@@ -20,7 +20,7 @@ public class HeroDataServiceImpl implements HeroDataService {
 
   @PostConstruct
   public void initHeroes() {
-    for (int id = 0; id < heroDataProperties.getCount(); id++) {
+    for (int id = 0; id < heroDataProperties.getMemberCount(); id++) {
       cache.putIfAbsent(id, Hero.builder().id(id).experience(0).level(1).build());
     }
   }

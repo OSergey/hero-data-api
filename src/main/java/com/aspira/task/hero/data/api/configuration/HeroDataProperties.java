@@ -18,7 +18,7 @@ public class HeroDataProperties {
 
   @NotNull
   @Valid
-  private Integer count;
+  private Integer memberCount;
 
   @NotNull
   @Valid
